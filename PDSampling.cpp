@@ -1,7 +1,9 @@
 // $Id: PDSampling.cpp,v 1.12 2006/07/11 16:45:22 zr Exp $
 
 #define _USE_MATH_DEFINES
-#include "math.h"
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include <map>
 
