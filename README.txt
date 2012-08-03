@@ -113,6 +113,8 @@ The format matches the pseudo-C struct below::
   	float points[N][2];
   };
   
+The format can be converted to JSON with the ``dump-points`` script.
+
 
 Acknowledgments
 ---------------

@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+
+import struct
+import sys
+
+def main():
+    if len(sys.argv) != 2:
+        raise SystemExit("error: usage: %s <input file>\n" % (
+                sys.argv[0]))
+
+    with open(sys.argv[1]) as f:
+        data = f.read()
+        header_fmt = "@iffi"
+        pt_fmt = "@ff"
+        header_size = struct.calcsize(header_fmt)
+        pt_size = struct.calcsize(pt_fmt)
+        num_points, generation_time, radius, is_tiled = struct.unpack(
+            header_fmt, data[:header_size])
+
+        print '{'
+        print '  "num_points" : %r,' % (num_points,)
+        print '  "generation_time" : %r,' % (generation_time,)
+        print '  "radius" : %r,' % (radius,)
+        print '  "is_tiled" : %r,' % (is_tiled,)
+        print '  "points" : ['
+        for i in range(num_points):
+            pt_base = header_size + i*pt_size
+            x, y = struct.unpack(pt_fmt, data[pt_base:pt_base + pt_size])
+            print "    [%r, %r]%s" % (x, y, (",", "")[i + 1 == num_points])
+        print '  ]'
+        print '}'
+
+if __name__ == '__main__':
+   main()
